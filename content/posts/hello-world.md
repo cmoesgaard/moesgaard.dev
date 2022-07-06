@@ -10,5 +10,6 @@ I'll probably write about everything else going on in my life too.
 
 * Written in [Hugo](https://gohugo.io/)
 * Styled with [Congo](https://jpanther.github.io/congo/)
+* Published with [Netlify CMS](https://www.netlifycms.org/)
 * Served by [Netlify](https://www.netlify.com/)
 * Hosted on [Github](https://github.com/cmoesgaard/moesgaard.dev)
