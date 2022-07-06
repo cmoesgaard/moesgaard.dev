@@ -20,10 +20,10 @@
   pageRef = "about"
   weight = 15
 
-# [[main]]
-#   name = "Categories"
-#   pageRef = "categories"
-#   weight = 20
+[[main]]
+  name = "CV"
+  url = "https://registry.jsonresume.org/cmoesgaard"
+  weight = 20
 
 # [[main]]
 #   name = "Tags"
