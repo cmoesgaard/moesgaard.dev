@@ -71,10 +71,6 @@ As can be seen, this enables us to define the service, along with its routing co
 
 As previously mentioned, I have a separate file per service so I've registered an external `traefik` docker network that is shared by Traefik and every service I want to route data to.
 
-### Observability
-
-To ensure that my stack isn't 
-
 ## What's next?
 
 Despite it's shortcomings, I've deemed my own setup Good Enough(tm) and it has served me pretty well for a number of years so far. But there's always room for improvement.
@@ -83,6 +79,6 @@ In the future I'd like to improve on a few things:
 
 - A way to automatically update my services (probably using [Watchtower](https://containrrr.dev/watchtower/))
 - A GitOps-y way to have changes to my repository automatically be reflected on the server, so I don't have to SSH out and do stuff with my hands
-- Potentially migrate my setup to Kubernetes, starting with a k3s cluster. This will at least allow me to easily implement a GitOps workflow with FluxCD or similar, and will serve as a fun learning experience.
+- Potentially migrate my setup to Kubernetes, starting with a k3s cluster. This will at least allow me to easily implement a GitOps workflow with FluxCD or similar, and will serve as a 💀fun💀 learning experience.
   - [k8s-at-home](https://k8s-at-home.com/) is a community focused on doing exactly this, and they have a lot of ready-made Helm charts for many services.
 
