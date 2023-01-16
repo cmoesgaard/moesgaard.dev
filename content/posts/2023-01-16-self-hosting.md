@@ -34,9 +34,11 @@ It's a fairly slim list, but these are just the services I use and depend on in 
 
 Self-hosting can be handled in a lot of different ways depending on how ambitious you want to be. Having an interest in running a server *definitely* helps, but isn't strictly required.
 
-I'll explain how my setup is structured.
+The code for my current setup is open-source and can be seen here: XXX
 
-### A server
+I'll explain a bit about how my setup is structured.
+
+### Server
 
 I run most of my things off of a single [Hetzner CX21 VPS](https://www.hetzner.com/cloud). 
 
@@ -44,8 +46,43 @@ But for experimentation purposes you can even run the services on your local mac
 
 If you want to be able to reach your services outside of your own machine, you'll need a domain name of some kind. Registering a domain and setting up DNS has been left as an exercise to the reader.
 
+My self-hosting repo has then finally been clumsily checked out on the server with `git`.🤠
+
 ### Running the services
 
 Everything is containerized these days, so the most straightforward way of running the various services is through the use of `docker-compose`. Most services will have a `docker-compose.yml` file as part of their documentation or README.md that be used as a template.
 
+The `docker-compose.yml` file can often be used as-is but I've done the following:
+
+- All data persisted in [Docker volumes](https://docs.docker.com/storage/volumes/) rather than bind mounts.
+- Each service stack is in its own `docker-compose.yml` file. This helps ensure that a private network is created for each service, restricting access to your various databases.
+
+### Traefik
+
+Traefik helps tie the whole thing together, and makes everything reachable from the outside. Traefik is an edge router - essentially a reverse proxy - responsible for routing traffic from the outside to the various services running on your server.
+
+It also automatically takes care of issuing TLS certificates via LetsEncrypt.
+
+Traefik supports dynamic configuration of its routes, which in our case allows us to specify the relevant configuration as labels on the individual Docker containers. 
+
+**INSERT EXAMPLE HERE**
+
+As can be seen, this enables us to define the service, along with its routing configuration in the same file. Traefik will automatically read the configuration from the labels on container startup and register the appropriate routes (and tear them down on container shutdown).
+
+As previously mentioned, I have a separate file per service so I've registered an external `traefik` docker network that is shared by Traefik and every service I want to route data to.
+
+### Observability
+
+To ensure that my stack isn't 
+
+## What's next?
+
+Despite it's shortcomings, I've deemed my own setup Good Enough(tm) and it has served me pretty well for a number of years so far. But there's always room for improvement.
+
+In the future I'd like to improve on a few things:
+
+- A way to automatically update my services (probably using [Watchtower](https://containrrr.dev/watchtower/))
+- A GitOps-y way to have changes to my repository automatically be reflected on the server, so I don't have to SSH out and do stuff with my hands
+- Potentially migrate my setup to Kubernetes, starting with a k3s cluster. This will at least allow me to easily implement a GitOps workflow with FluxCD or similar, and will serve as a fun learning experience.
+  - [k8s-at-home](https://k8s-at-home.com/) is a community focused on doing exactly this, and they have a lot of ready-made Helm charts for many services.
 
