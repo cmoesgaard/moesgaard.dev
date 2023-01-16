@@ -1,7 +1,9 @@
 ---
-title: Self-hosting
+title: Self-hosting for fun and profit
 date: 2023-01-16T17:21:32.657Z
 ---
+Well, not so much for profit, but it's fun sometimes.
+
 Over the past few years I've gotten more and more into self-hosting; managing my own server rather than using the publicly available (and often closed-source) apps and services.
 
 My reasons for doing so vary a bit from service to service, but it mostly centers around the following:
