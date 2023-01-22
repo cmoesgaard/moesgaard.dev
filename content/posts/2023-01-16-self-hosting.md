@@ -17,6 +17,7 @@ My reasons for doing so vary a bit from service to service, but it mostly center
 At the time of writing, I currently run the following services:
 
 * Synapse (a Matrix server for decentralized communication)
+* Joplin Server (a synchronization server for Joplin, a note-taking app)
 * Miniflux (a minimalistic RSS reader)
 * Vikunja (an open-source Todoist clone)
 * Mealie (a recipe manager)
@@ -56,8 +57,8 @@ Everything is containerized these days, so the most straightforward way of runni
 
 The `docker-compose.yml` file can often be used as-is but I've done the following:
 
-- All data persisted in [Docker volumes](https://docs.docker.com/storage/volumes/) rather than bind mounts.
-- Each service stack is in its own `docker-compose.yml` file. This helps ensure that a private network is created for each service, restricting access to your various databases.
+* All data persisted in [Docker volumes](https://docs.docker.com/storage/volumes/) rather than bind mounts.
+* Each service stack is in its own `docker-compose.yml` file. This helps ensure that a private network is created for each service, restricting access to your various databases.
 
 ### Traefik
 
@@ -67,7 +68,51 @@ It also automatically takes care of issuing TLS certificates via LetsEncrypt.
 
 Traefik supports dynamic configuration of its routes, which in our case allows us to specify the relevant configuration as labels on the individual Docker containers. 
 
-**INSERT EXAMPLE HERE**
+```yaml
+version: "3.1"
+services:
+  mealie:
+    image: hkotel/mealie
+    container_name: mealie
+    restart: unless-stopped
+    depends_on:
+      - "postgres"
+    environment:
+      DB_ENGINE: postgres
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_SERVER: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: mealie
+    networks:
+      - traefik
+      - mealie
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mealie.rule=Host(`${HOSTNAME}`)"
+      - "traefik.http.routers.mealie.entrypoints=websecure"
+      - "traefik.http.routers.mealie.tls.certresolver=mytlschallenge"
+      - "traefik.docker.network=traefik"
+  postgres:
+    container_name: postgres
+    image: postgres:14
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+    networks:
+      - mealie
+    volumes:
+      - db:/var/lib/postgresql/data/
+
+networks:
+    traefik:
+        external: true
+    mealie:
+
+volumes:
+  db:
+```
 
 As can be seen, this enables us to define the service, along with its routing configuration in the same file. Traefik will automatically read the configuration from the labels on container startup and register the appropriate routes (and tear them down on container shutdown).
 
@@ -79,8 +124,8 @@ Despite it's shortcomings, I've deemed my own setup Good Enough(tm) and it has s
 
 In the future I'd like to improve on a few things:
 
-- A way to automatically update my services (probably using [Watchtower](https://containrrr.dev/watchtower/))
-- A GitOps-y way to have changes to my repository automatically be reflected on the server, so I don't have to SSH out and do stuff with my hands
-- Potentially migrate my setup to Kubernetes, starting with a k3s cluster. This will at least allow me to easily implement a GitOps workflow with FluxCD or similar, and will serve as a 💀fun💀 learning experience.
-  - [k8s-at-home](https://k8s-at-home.com/) is a community focused on doing exactly this, and they have a lot of ready-made Helm charts for many services.
+* A way to automatically update my services (probably using [Watchtower](https://containrrr.dev/watchtower/))
+* A GitOps-y way to have changes to my repository automatically be reflected on the server, so I don't have to SSH out and do stuff with my hands
+* Potentially migrate my setup to Kubernetes, starting with a k3s cluster. This will at least allow me to easily implement a GitOps workflow with FluxCD or similar, and will serve as a 💀fun💀 learning experience.
 
+  * [k8s-at-home](https://k8s-at-home.com/) is a community focused on doing exactly this, and they have a lot of ready-made Helm charts for many services.
