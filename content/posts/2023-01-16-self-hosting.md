@@ -50,11 +50,11 @@ But for experimentation purposes you can even run the services on your local mac
 
 If you want to be able to reach your services outside of your own machine, you'll need a domain name of some kind. Registering a domain and setting up DNS has been left as an exercise to the reader.
 
-My self-hosting repo has then finally been clumsily checked out on the server with `git`.🤠
+In my case, my self-hosting repo has been clumsily checked out on the server manually with `git`.🤠
 
 ### Running the services
 
-Everything is containerized these days, so the most straightforward way of running the various services is through the use of `docker-compose`. Most services will have a `docker-compose.yml` file as part of their documentation or README.md that be used as a template.
+Everything is containerized, so the most straightforward way of running the various services is through the use of `docker-compose`. Most services will have a `docker-compose.yml` file as part of their documentation or README.md that be used as a template.
 
 The `docker-compose.yml` file can often be used as-is but I've done the following:
 
@@ -67,7 +67,7 @@ Traefik helps tie the whole thing together, and makes everything reachable from 
 
 It also automatically takes care of issuing TLS certificates via LetsEncrypt.
 
-Traefik supports dynamic configuration of its routes, which in our case allows us to specify the relevant configuration as labels on the individual Docker containers. 
+Traefik supports dynamic [configuration discovery](https://doc.traefik.io/traefik/providers/docker/), which in our case allows us to specify the relevant configuration as labels on the individual Docker containers: 
 
 ```yaml
 version: "3.1"
@@ -115,7 +115,7 @@ volumes:
   db:
 ```
 
-As can be seen, this enables us to define the service, along with its routing configuration in the same file. Traefik will automatically read the configuration from the labels on container startup and register the appropriate routes (and tear them down on container shutdown).
+In this example, we have a `mealie` app with corresponding database. The app serving the frontend has been given labels describing how it should be reachable from the outside. Traefik will automatically read the configuration from the labels on container startup and register the appropriate routes (and tears them down on container shutdown).
 
 As previously mentioned, I have a separate file per service so I've registered an external `traefik` docker network that is shared by Traefik and every service I want to route data to.
 
