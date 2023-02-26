@@ -1,6 +1,6 @@
 ---
 title: Building a home-streaming setup
-date: 2023-02-26T15:38:16.425Z
+date: 2023-02-26T15:46:39.631Z
 ---
 The advent of Netflix and friends meant that I basically stopped pirating TV shows and movies altogether. It's been *years* since I've even thought of it. Sure, you couldn't stream everything, but the selection was so varied that I felt like it was at least good enough to not bother with pirating stuff anymore.
 
