@@ -4,10 +4,8 @@
 
 baseURL = "https://moesgaard.dev/"
 defaultContentLanguage = "en"
+title = "moesgaard.dev"
 
 enableRobotsTXT = true
 paginate = 10
 summaryLength = 0
-
-[outputs]
-  home = ["HTML", "RSS", "JSON"]

@@ -1,62 +1,48 @@
-# -- Theme Options --
-# These options control how the theme functions and allow you to
-# customise the display of your website.
-#
-# Refer to the theme docs for more details about each of these parameters.
-# https://jpanther.github.io/congo/docs/configuration/#theme-parameters
 
-colorScheme = "nord"
-defaultAppearance = "dark" # valid options: light or dark
-autoSwitchAppearance = false
-showAppearanceSwitcher = false
+env = "production"
+title = "Christoffer Moesgaard"
+DateFormat = "January 2, 2006"
+defaultTheme = "auto"
+disableThemeToggle = false
+ShowReadingTime = true
+ShowPostNavLinks = false
+ShowBreadCrumbs = false
+ShowCodeCopyButtons = true
+ShowWordCount = false
+UseHugoToc = false
+disableSpecial1stPost = false
+disableScrollToTop = false
+comments = false
+hidemeta = false
+hideSummary = false
+showtoc = false
+tocopen = false
 
-enableSearch = false
-enableCodeCopy = false
+[profileMode]
+enabled = true
+title = "Christoffer Moesgaard"
+imageUrl = "images/avatar.jpg"
 
-# mainSections = ["section1", "section2"]
-# robots = ""
-showScrollToTop = true
+[[profileMode.buttons]]
+name = "Posts"
+url = "posts"
 
-[homepage]
-  layout = "profile" # valid options: page, profile, custom
-  showRecent = false
+[[profileMode.buttons]]
+name = "CV"
+url = "https://registry.jsonresume.org/cmoesgaard"
 
-[article]
-  showDate = true
-  showDateUpdated = false
-  showAuthor = true
-  showBreadcrumbs = false
-  showDraftLabel = true
-  showEdit = false
-  # editURL = "https://github.com/username/repo/"
-  editAppendPath = true
-  showHeadingAnchors = true
-  showPagination = true
-  invertPagination = false
-  showReadingTime = true
-  showTableOfContents = false
-  showTaxonomies = false
-  showWordCount = false
-  # sharingLinks = ["facebook", "twitter", "pinterest", "reddit", "linkedin", "email"]
+[[socialIcons]]
+name = "email"
+url = "mailto:christoffer@moesgaard.dev"
 
-[list]
-  showBreadcrumbs = false
-  showSummary = false
-  showTableOfContents = false
-  groupByYear = true
+[[socialIcons]]
+name = "github"
+url = "https://github.com/cmoesgaard"
 
-[sitemap]
-  excludedKinds = ["taxonomy", "term"]
+[[socialIcons]]
+name = "gitlab"
+url = "https://gitlab.com/cmoesgaard"
 
-[taxonomy]
-  showTermCount = true
-
-[fathomAnalytics]
-  # site = "ABC12345"
-  # domain = "llama.yoursite.com"
-
-[verification]
-  # google = ""
-  # bing = ""
-  # pinterest = ""
-  # yandex = ""
+[[socialIcons]]
+name = "linkedin"
+url = "https://linkedin.com/in/cmoesgaard"
