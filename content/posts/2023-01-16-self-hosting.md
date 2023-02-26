@@ -17,16 +17,16 @@ My reasons for doing so vary a bit from service to service, but it mostly center
 
 At the time of writing, I currently run the following services:
 
-* Synapse (a Matrix server for decentralized communication)
-* Joplin Server (a synchronization server for Joplin, a note-taking app)
-* Miniflux (a minimalistic RSS reader)
-* Vikunja (an open-source Todoist clone)
-* Mealie (a recipe manager)
+* [Synapse](https://matrix.org/docs/projects/server/synapse) (a Matrix server for decentralized communication)
+* [Joplin](https://joplinapp.org/) Server (a synchronization server for Joplin, a note-taking app)
+* [Miniflux](https://miniflux.app/) (a minimalistic RSS reader)
+* [Vikunja](https://vikunja.io/) (an open-source Todoist clone)
+* [Mealie](https://mealie.io/) (a recipe manager)
 
 And the following, to handle the surrounding infrastructure:
 
-* Traefik (open-source edge router)
-* Prometheus & friends (for monitoring the server itself)
+* [Traefik](https://traefik.io/traefik/) (open-source edge router)
+* [Prometheus](https://prometheus.io/docs/introduction/overview/) & friends (for monitoring the server itself)
 
 It's a fairly slim list, but these are just the services I use and depend on in my daily life - I make a habit of checking out new services occasionally.
 
@@ -115,18 +115,19 @@ volumes:
   db:
 ```
 
-In this example, we have a `mealie` app with corresponding database. The app serving the frontend has been given labels describing how it should be reachable from the outside. Traefik will automatically read the configuration from the labels on container startup and register the appropriate routes (and tears them down on container shutdown).
+In this example, we have a `mealie` app with corresponding database. The app serving the frontend has been given labels describing how it should be reachable from the outside. Traefik will automatically read the configuration from the labels on container startup and register the appropriate routes (and tear them down on container shutdown).
 
-As previously mentioned, I have a separate file per service so I've registered an external `traefik` docker network that is shared by Traefik and every service I want to route data to.
+As previously mentioned, I have a separate `docker-compose.yml` file per service, so I've registered an external `traefik` docker network that is shared by Traefik and every service I want to route data to.
 
 ## What's next?
 
-Despite it's shortcomings, I've deemed my own setup Good Enough(tm) and it has served me pretty well for a number of years so far. But there's always room for improvement.
+Despite its shortcomings, I've deemed my own setup Good Enough™ and it has served me pretty well for a number of years so far. But there's always room for improvement.
 
 In the future I'd like to improve on a few things:
 
 * A way to automatically update my services (probably using [Watchtower](https://containrrr.dev/watchtower/))
+* A more robust observability setup.
 * A GitOps-y way to have changes to my repository automatically be reflected on the server, so I don't have to SSH out and do stuff with my hands
-* Potentially migrate my setup to Kubernetes, starting with a k3s cluster. This will at least allow me to easily implement a GitOps workflow with FluxCD or similar, and will serve as a 💀fun💀 learning experience.
+* Potentially migrate my setup to Kubernetes, starting with a k3s cluster. This will at least allow me to easily implement a GitOps workflow with FluxCD or similar, and will serve as a ⚰️fun⚰️ learning experience.
 
   * [k8s-at-home](https://k8s-at-home.com/) is a community focused on doing exactly this, and they have a lot of ready-made Helm charts for many services.
