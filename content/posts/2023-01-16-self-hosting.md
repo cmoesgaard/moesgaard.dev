@@ -1,6 +1,6 @@
 ---
 title: Self-hosting for fun and profit
-date: 2023-02-26T15:48:01.490Z
+date: 2023-02-26T20:23:33.664Z
 ---
 Well, not so much for profit, but it's fun sometimes.
 
