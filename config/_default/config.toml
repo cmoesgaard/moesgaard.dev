@@ -5,6 +5,7 @@
 baseURL = "https://moesgaard.dev/"
 defaultContentLanguage = "en"
 title = "moesgaard.dev"
+relativeURLs = true
 
 enableRobotsTXT = true
 paginate = 10
