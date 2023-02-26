@@ -9,7 +9,8 @@ Over the past few years I've gotten more and more into self-hosting; managing my
 My reasons for doing so vary a bit from service to service, but it mostly centers around the following:
 
 * Owning my own data
-* Not being in control of what happens to the services I depend on (as when Google Reader shut down a decade ago).
+* Not being in control of what happens to the services I depend on (as when Google Reader shut down a decade ago which I'm somehow still mad about).
+* It's a great learning experience.
 * [And other idealistic open-source related reasons](https://www.gnu.org/philosophy/who-does-that-server-really-serve.html).
 
 ## My setup
