@@ -1,12 +1,12 @@
 :root {
     --theme: #eceff4;
-    --entry: #e5e9f0;
+    --entry: #eceff4;
     --primary: #3b4252;
     --secondary: #434c5e;
     --tertiary: #d8dee9;
     --content: #2e3440;
     --hljs-bg: #242933;
-    --code-bg: #eceff4;
+    --code-bg: #e5e9f0;
     --border: #d8dee9;
 }
 
@@ -18,6 +18,6 @@
     --tertiary: #3b4252;
     --content: #eceff4;
     --hljs-bg: #242933;
-    --code-bg: #2e3440;
+    --code-bg: #3b4252;
     --border: #434c5e;
 }
