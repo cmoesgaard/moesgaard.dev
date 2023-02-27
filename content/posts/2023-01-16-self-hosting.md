@@ -38,7 +38,7 @@ It's a fairly slim list, but these are just the services I use and depend on in 
 
 Self-hosting can be handled in a lot of different ways depending on how ambitious you want to be. Having an interest in running a server *definitely* helps, but isn't strictly required.
 
-The repository containing my own setup is a *mess* currently, so it is sadly not publicly available right now.
+The repository containing my own setup [is open-source](https://github.com/cmoesgaard/home-ops/tree/main/docker-compose). For a long time my setup only lived on the server, so migrating the files to a Git repo is a relatively new thing, so things are still a bit *messy*.
 
 I'll explain a bit, though, about how my setup is structured.
 
@@ -48,7 +48,7 @@ I run most of my things off of a single [Hetzner CX21 VPS](https://www.hetzner.c
 
 But for experimentation purposes you can even run the services on your local machine if you wish.
 
-In my case, my self-hosting repo has been clumsily checked out on the server manually with `git`,🤠 but more elegant solutions can of course be implemented.
+In my case, my self-hosting repo has been clumsily checked out on the server manually with `git`🤠 but more elegant solutions can of course be implemented.
 
 If you want to be able to reach your services outside of your own machine, you'll probably need a domain name of some kind. Registering a domain and setting up DNS has been left as an exercise to the reader.
 
@@ -56,7 +56,7 @@ If you want to be able to reach your services outside of your own machine, you'l
 
 Everything is containerized, so the most straightforward way of running the various services is through the use of `docker-compose`. Most services will have a `docker-compose.yml` file as part of their documentation or `README.md` that be used as a template.
 
-An attempt to gather \`docker-compose\` examples has been made in the [Compose-Examples repo](https://github.com/Haxxnet/Compose-Examples).
+A few collections of `docker-compose` examples have been created and can be used as inspiration, such as [LinuxServer.io](https://github.com/linuxserver) and [Compose-Examples](https://github.com/Haxxnet/Compose-Examples).
 
 The `docker-compose.yml` files you find can often be used as-is but I've done the following for mine:
 
