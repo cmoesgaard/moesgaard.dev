@@ -48,9 +48,9 @@ I run most of my things off of a single [Hetzner CX21 VPS](https://www.hetzner.c
 
 But for experimentation purposes you can even run the services on your local machine if you wish.
 
-If you want to be able to reach your services outside of your own machine, you'll need a domain name of some kind. Registering a domain and setting up DNS has been left as an exercise to the reader.
-
 In my case, my self-hosting repo has been clumsily checked out on the server manually with `git`.🤠
+
+If you want to be able to reach your services outside of your own machine, you'll need a domain name of some kind. Registering a domain and setting up DNS has been left as an exercise to the reader.
 
 ### Running the services
 
@@ -59,7 +59,7 @@ Everything is containerized, so the most straightforward way of running the vari
 The `docker-compose.yml` file can often be used as-is but I've done the following:
 
 * All data persisted in [Docker volumes](https://docs.docker.com/storage/volumes/) rather than bind mounts.
-* Each service stack is in its own `docker-compose.yml` file. This helps ensure that a private network is created for each service, restricting access to your various databases.
+* Each service stack is in its own `docker-compose.yml` file. This helps ensure that a private network is created for each service, restricting access to your various databases. This also allows me to easily stop/start individual services.
 
 ### Traefik
 
@@ -115,7 +115,7 @@ volumes:
   db:
 ```
 
-In this example, we have a `mealie` app with corresponding database. The app serving the frontend has been given labels describing how it should be reachable from the outside. Traefik will automatically read the configuration from the labels on container startup and register the appropriate routes (and tear them down on container shutdown).
+In this example, we have a Mealie app with corresponding database. The app serving the frontend has been given labels describing how it should be reachable from the outside. Traefik will automatically read the configuration from the labels on container startup and register the appropriate routes (and tear them down on container shutdown).
 
 As previously mentioned, I have a separate `docker-compose.yml` file per service, so I've registered an external `traefik` docker network that is shared by Traefik and every service I want to route data to.
 
