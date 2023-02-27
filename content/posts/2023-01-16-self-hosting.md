@@ -17,16 +17,16 @@ My reasons for doing so vary a bit from service to service, but it mostly center
 
 At the time of writing, I currently run the following services:
 
-* [Synapse](https://matrix.org/docs/projects/server/synapse) (a Matrix server for decentralized communication)
-* [Joplin](https://joplinapp.org/) Server (a synchronization server for Joplin, a note-taking app)
-* [Miniflux](https://miniflux.app/) (a minimalistic RSS reader)
-* [Vikunja](https://vikunja.io/) (an open-source Todoist clone)
-* [Mealie](https://mealie.io/) (a recipe manager)
+* [Synapse](https://matrix.org/docs/projects/server/synapse) (a Matrix server for decentralized communication).
+* [Joplin](https://joplinapp.org/) Server (a synchronization server for Joplin, a note-taking app).
+* [Miniflux](https://miniflux.app/) (a minimalistic RSS reader).
+* [Vikunja](https://vikunja.io/) (an open-source Todoist clone).
+* [Mealie](https://mealie.io/) (a recipe manager).
 
 And the following, to handle the surrounding infrastructure:
 
-* [Traefik](https://traefik.io/traefik/) (open-source edge router)
-* [Prometheus](https://prometheus.io/docs/introduction/overview/) & friends (for monitoring the server itself)
+* [Traefik](https://traefik.io/traefik/) (open-source edge router).
+* [Prometheus](https://prometheus.io/docs/introduction/overview/) & friends (for monitoring the server itself).
 
 It's a fairly slim list, but these are just the services I use and depend on in my daily life - I make a habit of checking out new services occasionally.
 
@@ -127,7 +127,7 @@ As previously mentioned, I have a separate `docker-compose.yml` file per service
 
 Despite its shortcomings, I've deemed my own setup Good Enough™ and it has served me pretty well for a number of years so far. But there's always room for improvement.
 
-In the future I'd like to improve on a few things:
+In the future I'd like to improve on a few things, each of which probably deserve their own posts:
 
 * Open-sourcing my infrastructure. Cleaning up my repo, and making what I have available for others as inspiration.
 * A way to automatically update my services (probably using [Watchtower](https://containrrr.dev/watchtower/)).
