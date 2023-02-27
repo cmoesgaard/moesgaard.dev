@@ -38,7 +38,7 @@ It's a fairly slim list, but these are just the services I use and depend on in 
 
 Self-hosting can be handled in a lot of different ways depending on how ambitious you want to be. Having an interest in running a server *definitely* helps, but isn't strictly required.
 
-The code for my current setup is open-source and can be seen here: XXX
+For inspiration, [my own setup is open-source](https://github.com/cmoesgaard/home-ops).
 
 I'll explain a bit about how my setup is structured.
 
@@ -48,15 +48,17 @@ I run most of my things off of a single [Hetzner CX21 VPS](https://www.hetzner.c
 
 But for experimentation purposes you can even run the services on your local machine if you wish.
 
-In my case, my self-hosting repo has been clumsily checked out on the server manually with `git`.🤠
+In my case, my self-hosting repo has been clumsily checked out on the server manually with `git`,🤠 but more elegant solutions can of course be implemented.
 
-If you want to be able to reach your services outside of your own machine, you'll need a domain name of some kind. Registering a domain and setting up DNS has been left as an exercise to the reader.
+If you want to be able to reach your services outside of your own machine, you'll probably need a domain name of some kind. Registering a domain and setting up DNS has been left as an exercise to the reader.
 
 ### Running the services
 
-Everything is containerized, so the most straightforward way of running the various services is through the use of `docker-compose`. Most services will have a `docker-compose.yml` file as part of their documentation or README.md that be used as a template.
+Everything is containerized, so the most straightforward way of running the various services is through the use of `docker-compose`. Most services will have a `docker-compose.yml` file as part of their documentation or `README.md` that be used as a template.
 
-The `docker-compose.yml` file can often be used as-is but I've done the following:
+An attempt to gather \`docker-compose\` examples has been made in the [Compose-Examples repo](https://github.com/Haxxnet/Compose-Examples).
+
+The `docker-compose.yml` files you find can often be used as-is but I've done the following for mine:
 
 * All data persisted in [Docker volumes](https://docs.docker.com/storage/volumes/) rather than bind mounts.
 * Each service stack is in its own `docker-compose.yml` file. This helps ensure that a private network is created for each service, restricting access to your various databases. This also allows me to easily stop/start individual services.
@@ -66,6 +68,8 @@ The `docker-compose.yml` file can often be used as-is but I've done the followin
 Traefik helps tie the whole thing together, and makes everything reachable from the outside. Traefik is an edge router - essentially a reverse proxy - responsible for routing traffic from the outside to the various services running on your server.
 
 It also automatically takes care of issuing TLS certificates via LetsEncrypt.
+
+Traefik again runs as its own container, which is the only container with port-bindings to the host machine.
 
 Traefik supports dynamic [configuration discovery](https://doc.traefik.io/traefik/providers/docker/), which in our case allows us to specify the relevant configuration as labels on the individual Docker containers: 
 
