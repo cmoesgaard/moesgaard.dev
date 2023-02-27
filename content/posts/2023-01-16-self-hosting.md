@@ -8,7 +8,7 @@ Over the past few years I've gotten more and more into self-hosting; managing my
 
 My reasons for doing so vary a bit from service to service, but it mostly centers around the following:
 
-* Owning my own data
+* Owning my own data.
 * Not being in control of what happens to the services I depend on (as when Google Reader shut down a decade ago which I'm somehow still mad about).
 * It's a great learning experience.
 * [And other idealistic open-source related reasons](https://www.gnu.org/philosophy/who-does-that-server-really-serve.html).
@@ -38,9 +38,9 @@ It's a fairly slim list, but these are just the services I use and depend on in 
 
 Self-hosting can be handled in a lot of different ways depending on how ambitious you want to be. Having an interest in running a server *definitely* helps, but isn't strictly required.
 
-For inspiration, [my own setup is open-source](https://github.com/cmoesgaard/home-ops).
+The repository containing my own setup is a *mess* currently, so it is sadly not publicly available right now.
 
-I'll explain a bit about how my setup is structured.
+I'll explain a bit, though, about how my setup is structured.
 
 ### Server
 
@@ -129,9 +129,10 @@ Despite its shortcomings, I've deemed my own setup Good Enough™ and it has ser
 
 In the future I'd like to improve on a few things:
 
-* A way to automatically update my services (probably using [Watchtower](https://containrrr.dev/watchtower/))
+* Open-sourcing my infrastructure. Cleaning up my repo, and making what I have available for others as inspiration.
+* A way to automatically update my services (probably using [Watchtower](https://containrrr.dev/watchtower/)).
 * A more robust observability setup.
-* A GitOps-y way to have changes to my repository automatically be reflected on the server, so I don't have to SSH out and do stuff with my hands
+* A GitOps-y way to have changes to my repository automatically be reflected on the server, so I don't have to SSH out and do stuff with my hands.
 * Potentially migrate my setup to Kubernetes, starting with a k3s cluster. This will at least allow me to easily implement a GitOps workflow with FluxCD or similar, and will serve as a ⚰️fun⚰️ learning experience.
 
   * [k8s-at-home](https://k8s-at-home.com/) is a community focused on doing exactly this, and they have a lot of ready-made Helm charts for many services.
