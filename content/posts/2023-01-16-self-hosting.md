@@ -129,7 +129,7 @@ Despite its shortcomings, I've deemed my own setup Good Enough™ and it has ser
 
 In the future I'd like to improve on a few things, each of which probably deserve their own posts:
 
-* Open-sourcing my infrastructure. Cleaning up my repo, and making what I have available for others as inspiration.
+* Cleaning up my repo, and making what I have available for others as inspiration.
 * A way to automatically update my services (probably using [Watchtower](https://containrrr.dev/watchtower/)).
 * A more robust observability setup.
 * A GitOps-y way to have changes to my repository automatically be reflected on the server, so I don't have to SSH out and do stuff with my hands.
