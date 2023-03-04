@@ -13,6 +13,7 @@ I need a format for specifying the puzzle, to be read by my solver. I would like
 
 [Yup](https://webpbn.com/export.cgi).
 
+I decided to implement a parser for the following format, for now:
 ```
 catalogue "webpbn.com #1"
 title "Dancer"
@@ -43,3 +44,8 @@ columns
 
 goal "01100011010010101110101001010000110010100101111000"
 ```
+
+## Actually solving it
+My initial approach was to try an build a solver that followed the same strategies I use when solving the puzzles manually. An overview of the different strategies I use, [can be seen here](https://www.nonograms.org/methods). At a certain point, I realized that it all boils down to a process of elimination. A matter of simply trying to fit potential placement of squares into a row/column following the existing values and the hints we've been given. 
+
+After a bit of thinking and experimentation, I came up with a simplified 
