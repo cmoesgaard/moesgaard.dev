@@ -19,8 +19,3 @@ weight = 10
 name = "About"
 url = "/about"
 weight = 15
-
-[[main]]
-name = "CV"
-url = "https://registry.jsonresume.org/cmoesgaard"
-weight = 20

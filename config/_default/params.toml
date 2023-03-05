@@ -27,10 +27,6 @@ imageUrl = "images/avatar.jpg"
 name = "Posts"
 url = "posts"
 
-[[profileMode.buttons]]
-name = "CV"
-url = "https://registry.jsonresume.org/cmoesgaard"
-
 [[socialIcons]]
 name = "email"
 url = "mailto:christoffer@moesgaard.dev"
@@ -40,9 +36,9 @@ name = "github"
 url = "https://github.com/cmoesgaard"
 
 [[socialIcons]]
-name = "gitlab"
-url = "https://gitlab.com/cmoesgaard"
-
-[[socialIcons]]
 name = "linkedin"
 url = "https://linkedin.com/in/cmoesgaard"
+
+[[socialIcons]]
+name = "cv"
+url = "https://registry.jsonresume.org/cmoesgaard"
