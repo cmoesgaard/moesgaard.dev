@@ -32,6 +32,10 @@ name = "email"
 url = "mailto:christoffer@moesgaard.dev"
 
 [[socialIcons]]
+name = "matrix"
+url = "https://matrix.to/#/@cm:filth.biz"
+
+[[socialIcons]]
 name = "github"
 url = "https://github.com/cmoesgaard"
 
