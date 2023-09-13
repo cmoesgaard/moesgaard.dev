@@ -81,4 +81,85 @@ From now on, everything merged to the `main` branch in the repo will now be reco
 
 ### Secret management
 
-* Generate `age` key and create secret in cluster by hand
+With GitOps we get a lovely paper trail regarding changes to our cluster, with every update or change corresponding to a git commit. We'd like to also have a way to store the various secrets we need as part of this, but without exposing every password and API token to the world. For this, we'll use [SOPS](https://github.com/getsops/sops). SOPS allows us to store our secrets as encrypted files, so that they can be decrypted and read by us and by Flux in the cluster, but not by third parties snooping around my repository. Flux supports SOPS for decrypting secrets [out of the box](https://fluxcd.io/flux/guides/mozilla-sops/).
+
+To make this work, we'll need to perform _another_ manual step. We'll need to generate a set of encryption keys using `age`:
+
+```
+❯ age-keygen -o age.agekey
+Public key: age1vt4lmr873png75lskfhz9ymh29wvnr3gydgzea6w8r7wp4al54lsdhw08a
+```
+
+And then store the private key as a secret in the cluster.
+
+```
+❯ cat age.agekey |
+kubectl create secret generic sops-age \
+--namespace=flux-system \
+--from-file=age.agekey=/dev/stdin
+```
+
+To allow SOPS to decrypt the files, the `age.agekey` must be stored in `~/.config/sops/age` as `keys.txt` (or added to this file if it exists)
+
+We only want SOPS to encrypt specific values inside our files, so we add a `.sops.yaml` file to the root of the repo containing the following, substituting the appropriate public key:
+
+```yaml
+---
+creation_rules:
+  - path_regex: kubernetes/.*\.yaml
+    encrypted_regex: "^(data|stringData)$"
+    age: age1vt4lmr873png75lskfhz9ymh29wvnr3gydgzea6w8r7wp4al54lsdhw08a
+```
+
+SOPS can now be used in the following way to encrypt secrets in-place:
+
+```shell
+❯ sops -i -e cluster-secrets.yaml
+```
+Turning a secret like this:
+
+```yaml
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: cluster-secrets
+    namespace: flux-system
+stringData:
+    PASSWORD: hunter2
+```
+
+Into this:
+
+```yaml
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: cluster-secrets
+    namespace: flux-system
+stringData:
+    PASSWORD: ENC[AES256_GCM,data:VYLeI8Ft,iv:A2Ph7+1qOwcfofRt5HLYCfSMQRnQKVz9fn6Jbm9ENO4=,tag:FH8V2kYjNLRZ7mSywKkVKA==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1vt4lmr873png75lskfhz9ymh29wvnr3gydgzea6w8r7wp4al54lsdhw08a
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB5WnY3UEt0bm5HektpUFh6
+            NU1ZbzdmTWRialFVeVZEZ01GdW44SUE5OUFrCndWdDR4djE3bjVUZHFwNmozSmZL
+            R0xheXcwSE9sMmpmVHZPZmNhaFNuaXMKLS0tIGtJLzVXRlZMR2ZERGY1VzZLUzQ0
+            Z1lxbXJNazdFN2I2MlBZbEg0dzRVNncKoT1oK/yakATXRaEHaeuDKvjL+vnxm/IC
+            wYdzbRJnPU2q/ssueGhIT2vjynniTMC8yoKJLEU/nn2/z7kPLokEsg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-09-13T11:21:32Z"
+    mac: ENC[AES256_GCM,data:p3rVoUXsqWbV6K6dKXtCTDcFvw3I9wijPNwJ1hauivoobjlDEbxtW/jksZaqWnlUH0K1EI37P9Gq49wDT8piyeiIVLZ+KvHeiP24/0JXf9i0+Tk2edgT6TIz2Z5jCP84flcFNWu0IT91eoYQqt1Gu5Np33517QJUC6J8jPY0C6k=,iv:4EPEAgSgCFXdtucSxznvORXYVy91LEAaXAIC+NTKeHA=,tag:J0R6gg5E9RSpPkx9CNc4tA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
+```
+
+Opening the above file with `sops cluster-secrets.yaml` will then allow us to modify the decrypted secret.
