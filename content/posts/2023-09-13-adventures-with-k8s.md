@@ -85,14 +85,14 @@ With GitOps we get a lovely paper trail regarding changes to our cluster, with e
 
 To make this work, we'll need to perform _another_ manual step. We'll need to generate a set of encryption keys using `age`:
 
-```
+```shell
 ❯ age-keygen -o age.agekey
 Public key: age1vt4lmr873png75lskfhz9ymh29wvnr3gydgzea6w8r7wp4al54lsdhw08a
 ```
 
 And then store the private key as a secret in the cluster.
 
-```
+```shell
 ❯ cat age.agekey |
 kubectl create secret generic sops-age \
 --namespace=flux-system \
@@ -163,3 +163,15 @@ sops:
 ```
 
 Opening the above file with `sops cluster-secrets.yaml` will then allow us to modify the decrypted secret.
+
+Finally, when the `Secret` above is created in the cluster, we add the following snippet to the relevant `Kustomization`, to tell Flux to decrypt the secret using SOPS and the private key we stored previously:
+
+```yaml
+  ...
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  ...
+```
+
