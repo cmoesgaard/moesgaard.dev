@@ -164,7 +164,7 @@ sops:
 
 Opening the above file with `sops cluster-secrets.yaml` will then allow us to modify the decrypted secret.
 
-Finally, when the `Secret` above is created in the cluster, we add the following snippet to the relevant `Kustomization`, to tell Flux to decrypt the secret using SOPS and the private key we stored previously:
+Finally, when the `Secret` above is created in the cluster, we add the following snippet to the relevant `Kustomization`, to tell Flux to decrypt the secret using SOPS and the private key we stored previously, and store the secrets in the cluster as normal `Secret`s:
 
 ```yaml
   ...
