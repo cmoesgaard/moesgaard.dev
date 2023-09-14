@@ -240,6 +240,7 @@ spec:
         kind: HelmRepository
         name: weave-gitops
       interval: 12h
+  values:
     securityContext:
       capabilities:
         drop:
