@@ -1,5 +1,5 @@
 ---
-title: Adventures with k8s
+title: Moving my setup to Kubernetes
 date: 2023-09-13T09:04:30.231Z
 ---
 In the interest of self-flagellation and modernizing my self-hosting setup I've begun moving everything I have to a Kubernetes cluster.
@@ -292,7 +292,7 @@ Forwarding from 127.0.0.1:9001 -> 9001
 Forwarding from [::1]:9001 -> 9001
 ```
 
-It works!
+It works, hooray!
 
 ![](/images/weave.png)
 
