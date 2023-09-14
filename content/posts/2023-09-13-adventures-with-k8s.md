@@ -23,7 +23,7 @@ This should serve as a good, solid PoC for running my own cluster with GitOps.
 The VM has been provisioned and I'm ready to install k3s. K3s deploys its own instance of Traefik by default, so we'll have to disable that as we want to control that part ourselves. The entire install process can be accomplished with this scary `curl`/`sh` oneliner:
 
 ```shell
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --disable traefik" sh -
+$ curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --disable traefik" sh -
 ```
 
 Once the install is complete, a `kubeconfig` file will have been generated for us, that allows us to reach and manage the cluster from the outside, located at `/etc/rancher/k3s/k3s.yaml`. We just need to `scp` this back home to our own machine and change the IP to point to the external IP of our VM.
