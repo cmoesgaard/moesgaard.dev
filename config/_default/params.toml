@@ -36,6 +36,10 @@ name = "matrix"
 url = "https://matrix.to/#/@cm:filth.biz"
 
 [[socialIcons]]
+name = "gitlab"
+url = "https://gitlab.com/cmoesgaard"
+
+[[socialIcons]]
 name = "github"
 url = "https://github.com/cmoesgaard"
 
