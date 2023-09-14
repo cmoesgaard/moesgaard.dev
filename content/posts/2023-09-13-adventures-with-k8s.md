@@ -29,7 +29,7 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --disable traefik" sh -
 Once the install is complete, a `kubeconfig` file will have been generated for us, that allows us to reach and manage the cluster from the outside, located at `/etc/rancher/k3s/k3s.yaml`. We just need to `scp` this back home to our own machine and change the IP to point to the external IP of our VM.
 
 ```shell
-❯ kubectl get pods -A
+$ kubectl get pods -A
 NAMESPACE      NAME                                       READY   STATUS    RESTARTS   AGE
 kube-system    local-path-provisioner-957fdf8bc-knfmv     1/1     Running   0          25h
 kube-system    coredns-77ccd57875-pvpbb                   1/1     Running   0          25h
@@ -49,7 +49,7 @@ Flux is able to manage itself and its own configuration, but this presents us wi
 Flux has a CLI that can be used to manage Flux in a cluster, and perform [initial bootstrapping](https://fluxcd.io/flux/installation/bootstrap/gitlab/). The following command will install the necessary controllers and CRDs in the cluster, commit the corresponding manifests to git, set up Flux to monitor the repository and then finally wait for Flux to reconcile its own state.
 
 ```shell
-❯ flux bootstrap gitlab \
+$ flux bootstrap gitlab \
         --owner=cmoesgaard \
         --repository=home-ops \
         --branch=main \
@@ -86,14 +86,14 @@ With GitOps we get a lovely paper trail regarding changes to our cluster, with e
 To make this work, we'll need to perform _another_ manual step. We'll need to generate a set of encryption keys using `age`:
 
 ```shell
-❯ age-keygen -o age.agekey
+$ age-keygen -o age.agekey
 Public key: age1vt4lmr873png75lskfhz9ymh29wvnr3gydgzea6w8r7wp4al54lsdhw08a
 ```
 
 And then store the private key as a secret in the cluster.
 
 ```shell
-❯ cat age.agekey |
+$ cat age.agekey |
 kubectl create secret generic sops-age \
 --namespace=flux-system \
 --from-file=age.agekey=/dev/stdin
@@ -114,7 +114,7 @@ creation_rules:
 SOPS can now be used in the following way to encrypt secrets in-place:
 
 ```shell
-❯ sops -i -e cluster-secrets.yaml
+$ sops -i -e cluster-secrets.yaml
 ```
 Turning a secret like this:
 
@@ -164,7 +164,7 @@ sops:
 
 Opening the above file with `sops cluster-secrets.yaml` will then allow us to modify the decrypted secret.
 
-Finally, when the `Secret` above is created in the cluster, we add the following snippet to the relevant `Kustomization`, to tell Flux to decrypt the secret using SOPS and the private key we stored previously, and store the secrets in the cluster as normal `Secret`s:
+Finally, when the `Secret` above is created in the cluster, we need to add the following snippet to the relevant `Kustomization` to tell Flux to decrypt the secret using SOPS and the private key we stored previously:
 
 ```yaml
   ...
@@ -175,3 +175,10 @@ Finally, when the `Secret` above is created in the cluster, we add the following
   ...
 ```
 
+The secret is now stored in the cluster as a normal `Secret`:
+
+```shell
+$ kubectl get secret -n flux-system cluster-secrets -o jsonpath="{.data.PASSWORD}" | base64 --decode
+hunter2
+                                                                                          
+```
