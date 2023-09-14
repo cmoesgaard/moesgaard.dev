@@ -579,5 +579,11 @@ $ kubectl -n flux-system port-forward svc/weave-gitops 9001:9001
 Forwarding from 127.0.0.1:9001 -> 9001
 Forwarding from [::1]:9001 -> 9001
 ```
+It works!
 
 ![](/images/weave.png)
+
+## What's next?
+
+We've managed to set up the initial cluster with Flux, and deployed our first thing.
+Next up, is setting up Traefik and Cert Manager, so we'll be able to reach our services from the outside.
