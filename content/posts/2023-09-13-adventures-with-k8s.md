@@ -298,5 +298,4 @@ It works!
 
 ## What's next?
 
-We've managed to set up the initial cluster with Flux, and deployed our first thing.
-Next up, is setting up Traefik and Cert Manager, so we'll be able to reach our services from the outside.
+We've managed to set up the initial cluster with Flux and deployed our first service. We're one step closer to having a fully functioning setup. Next, we'll set up Traefik and Cert Manager so we'll be able to reach our services from the outside.
