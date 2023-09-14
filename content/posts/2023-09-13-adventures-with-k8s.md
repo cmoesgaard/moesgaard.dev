@@ -82,11 +82,11 @@ From now on, everything merged to the `main` branch in the repo will now be reco
 ```text
 ├── apps
 ├── charts
-├── infrastructure
-|   ├── configs
-|   └── controllers
-└── flux
-    └── flux-system
+├── flux
+│   └── flux-system
+└── infrastructure
+    ├── configs
+    └── controllers
 ```
 
 In order of reconciliation:
