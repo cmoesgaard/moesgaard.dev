@@ -2,7 +2,7 @@
 title: Setting up cert-manager and Let's Encrypt
 date: 2023-11-21T20:27:15.897Z
 ---
-Previously, we up a k3s cluster managed by FluxCD. The next step is to actually make the things we deploy reachable from the outside, so for this we'll set up Traefik and cert-manager.
+Previously, we set up a k3s cluster managed by FluxCD. The next step is to actually make the things we deploy reachable from the outside, so for this we'll set up Traefik and cert-manager.
 
 ## Deploying Traefik
 
@@ -124,7 +124,7 @@ Loading this up in a browser fails, naturally, as the certificate issued by the 
 
 ![76d6d143dd86429e382dac6a31104cf6.png](/images/le-staging.png)
 
-It should be possible for us to issue actual certificates now, so let's add another `ClusterIssuer` for the Let's Encrypt production environment and configure the `Certificate` to use that instead.
+It should be possible for us to issue actual certificates now, so let's add another `ClusterIssuer` for the Let's Encrypt production environment and configure the `Certificate` to use that instead. The production `ClusterIssuer` is identical to the staging one, except being called `letsencrypt-prod` and using the Let's Encrypt production URL.
 
 ![](/images/cert-success.png)
 
