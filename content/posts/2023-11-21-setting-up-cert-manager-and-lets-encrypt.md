@@ -62,23 +62,23 @@ spec:
     name: letsencrypt-staging
     kind: ClusterIssuer
   dnsNames:
-    - "*.moesgaard.dev"
+    - "*.wintermute.moesgaard.dev"
 ```
 
-This creates a certificate for the DNS name(s) we configure and specifies the name of the secret we'd like the actual certificate to be stored in. We create this secret in the `traefik` namespace, as we'll need it to be readable by Traefik later. The `Certifiate` resource is picked up by cert-manager, which is then responsible for fetching the certificate from Let's Encrypt and populating the secret. A `CertificateRequest` is created to represent the request, and a `Challenge` resource is created temporarily to represent the ongoing DNS challenge against Let's Encrypt.
+This creates a certificate for the DNS name(s) we configure and specifies the name of the secret we'd like the actual certificate to be stored in. We create this secret in the `traefik` namespace, as we'll need it to be readable by Traefik later. The `Certificate` resource is picked up by cert-manager, which is then responsible for fetching the certificate from Let's Encrypt and populating the secret. A `CertificateRequest` is created to represent the request, and a `Challenge` resource is created temporarily to represent the ongoing DNS challenge against Let's Encrypt.
 
 ```shell
 $ kubectl get -n traefik certificaterequest
 NAME                             APPROVED   DENIED   READY   ISSUER                REQUESTOR                                         AGE
-moesgaard.dev-xb42h              True                True    letsencrypt-staging   system:serviceaccount:cert-manager:cert-manager   18m
+wintermute.moesgaard.dev-xb42h   True                True    letsencrypt-staging   system:serviceaccount:cert-manager:cert-manager   18m
 ```
 
-If all goes well, we should now have an actual useable certificate, which can be seen verified by looking at the `READY` field on the resource.
+If all goes well, we should now have an actual usable certificate, which can be seen verified by looking at the `READY` field on the resource.
 
 ```shell
 $ kubectl get -n traefik certificate
 NAME                       READY   SECRET                         AGE
-moesgaard.dev              True    moesgaard.dev-tls   20m
+wintermute.moesgaard.dev   True    wintermute.moesgaard.dev-tls   20m
 ```
 
 Finally, we need to tell Traefik to actually use this certificate for TLS. With Traefik this is handled through the resource `TLSStore` which allows us to set a default certificate, where we then point to the secret containing our certificate.
@@ -91,7 +91,7 @@ metadata:
   namespace: traefik
 spec:
   defaultCertificate:
-    secretName: "moesgaard.dev-tls"
+    secretName: "wintermute.moesgaard.dev-tls"
 ```
 
 ## Testing it out
@@ -109,7 +109,7 @@ All that's left is for us to see if it actually works. Let's try enabling ingres
               pathType: ImplementationSpecific
       tls:
         - hosts:
-            - weave.moesgaard.dev
+            - weave.wintermute.moesgaard.dev
 ```
 
 This will cause the Helm chart to create an `Ingress` resource for the given hostname with TLS enabled. 
@@ -125,6 +125,10 @@ Loading this up in a browser fails, naturally, as the certificate issued by the 
 ![76d6d143dd86429e382dac6a31104cf6.png](/images/le-staging.png)
 
 It should be possible for us to issue actual certificates now, so let's add another `ClusterIssuer` for the Let's Encrypt production environment and configure the `Certificate` to use that instead.
+
+![](/images/cert-success.png)
+
+Success! We now have the Weave instance we set up earlier running behind TLS, as noted by the little 🔒 next to the URL.
 
 ## Next steps
 
